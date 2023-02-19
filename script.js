@@ -49,14 +49,16 @@ function takeOrder() {
   });
 }
 
-let orderPrep = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve({
-      order_status: true,
-      paid: false,
-    });
-  }, 1500);
-});
+function orderPrep() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        order_status: true,
+        paid: false,
+      });
+    }, 1500);
+  });
+}
 
 function payOrder() {
   return new Promise((resolve, reject) => {
@@ -69,25 +71,39 @@ function payOrder() {
   });
 }
 
-// function thankyouFnc(){
-//     if (paid===true) {
-//         alert("Thanks for the order")
-//     }
-// }
+function thankyouFnc() {
+  alert("Thank you for your order!!");
+  console.log("Thank you for your order!!");
+}
 
-getMenu(
-  takeOrder(
-    orderPrep.then(function (data3) {
-      console.log(data3);
-    })
-  ).then(function (data2) {
-    console.log(data2);
-  })
-);
-payOrder().then(function thankyouFnc(data4) {
-  console.log(data4);
+// getMenu(
+//   takeOrder(
+//     orderPrep.then(function (data3) {
+//       console.log(data3);
+//     })
+//   ).then(function (data2) {
+//     console.log(data2);
+//   })
+// );
+// payOrder().then(function thankyouFnc(data4) {
+//   console.log(data4);
 
-  if (data4.paid === true) {
-    alert("Thank You for the Order");
-  }
+//   if (data4.paid === true) {
+//     alert("Thank You for the Order");
+//   }
+// });
+
+getMenu();
+
+takeOrder().then((data) => {
+  console.log(data);
+  orderPrep().then((data) => {
+    console.log(data);
+    payOrder().then((data) => {
+      console.log(data);
+      if (data.paid === true) {
+        thankyouFnc();
+      }
+    });
+  });
 });
